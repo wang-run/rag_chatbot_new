@@ -2,7 +2,7 @@ import os
 #关闭chroma向服务器传输数据，防止程序运行时出现Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given类问题
 os.environ["ANONYMIZED_TELEMETRY"] = "False"
 import streamlit as st
-
+import load_vectordb
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableBranch, RunnablePassthrough
@@ -14,6 +14,11 @@ sys.path.append("notebook/C3 搭建知识库")  # 将父目录放入系统
 from langchain_core.prompts import MessagesPlaceholder
 from langchain_core.messages import AIMessage, HumanMessage
 
+
+#创造向量库
+@st.cache_resource(show_spinner="正在初始化知识库，请稍候...")
+def init_database():
+    return load_vectordb.main()
 
 # %%封装检索器
 def get_retriever():
