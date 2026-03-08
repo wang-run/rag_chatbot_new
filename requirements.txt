@@ -1,0 +1,13 @@
+streamlit
+langchain
+langchain-core
+langchain-community
+zhipuai
+pydantic==1.10.15
+chromadb==0.4.24
+posthog<3.0.0
+python-dotenv
+
+sniffio
+httpx
+
