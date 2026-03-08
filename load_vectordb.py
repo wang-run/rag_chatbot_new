@@ -48,23 +48,47 @@ def save_vectordb(split_docs, vectordb_path = 'vectordb/chroma'):
     return vectordb
 
 
+
+
+#查看文件是否存在，防止文件存在的情况下chroma.from_message对文本多次最加
+def check_file_exists(file_path):
+    #检测路径是否存在
+    if os.path.exists(file_path):
+        if os.path.isdir(file_path):
+            return True
+        else:
+            return False
+    else:
+        return False
+
 def main():
     load_api()
+    vectordb_path = 'vectordb/chroma'
     txt_path = 'data_base/organize_sentence.txt'
-    docs = txt_to_document(txt_path)
-    split_docs = split_document(docs)
-    vectordb = save_vectordb(split_docs)
-    return vectordb
+    if not check_file_exists(vectordb_path):
+        docs = txt_to_document(txt_path)
+        split_docs = split_document(docs)
+        vectordb = save_vectordb(split_docs)
+        return vectordb
+    else:
+        return vectordb_path
 
 def text():
     question = '梁磊是什么专业的？'
-    vectordb = main()
+    if not isinstance(main(), str):
+        vectordb = main()
+
+    else:
+        vectordb =Chroma(
+            embedding_function=ZhipuAIEmbeddings(),
+            persist_directory= main()
+        )
     retriever = vectordb.as_retriever(search_kwargs={'k': 2})
     sim_answer = retriever.invoke(question)
     for i, answer in enumerate(sim_answer):
         print(f"第{i}个相似的回答为：{answer.page_content}")
 
-
+#
 if __name__ == '__main__':
     main()
     text()
