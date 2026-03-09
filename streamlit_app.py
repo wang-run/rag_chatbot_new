@@ -1,6 +1,8 @@
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+#强制安装新版sqlite3来替换掉系统自带的老版本，方便chroma读取
+
 
 import os
 #关闭chroma向服务器传输数据，防止程序运行时出现Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given类问题
