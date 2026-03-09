@@ -22,13 +22,7 @@ def init_database():
 
 # %%封装检索器
 def get_retriever():
-    embedding = ZhipuAIEmbeddings()
-    persist_directory = 'vectordb/chroma'
-
-    vectordb = Chroma(
-        persist_directory=persist_directory,
-        embedding_function=embedding
-    )
+    vectordb = init_database()
     return vectordb.as_retriever()
 
 

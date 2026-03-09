@@ -71,18 +71,16 @@ def main():
         vectordb = save_vectordb(split_docs)
         return vectordb
     else:
-        return vectordb_path
+        embedding = ZhipuAIEmbeddings()
+        vectordb = Chroma(
+            embedding_function=embedding,
+            persist_directory= vectordb_path
+        )
+        return vectordb
 
 def text():
     question = '梁磊是什么专业的？'
-    if not isinstance(main(), str):
-        vectordb = main()
-
-    else:
-        vectordb =Chroma(
-            embedding_function=ZhipuAIEmbeddings(),
-            persist_directory= main()
-        )
+    vectordb = main()
     retriever = vectordb.as_retriever(search_kwargs={'k': 2})
     sim_answer = retriever.invoke(question)
     for i, answer in enumerate(sim_answer):
