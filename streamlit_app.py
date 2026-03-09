@@ -1,3 +1,7 @@
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import os
 #关闭chroma向服务器传输数据，防止程序运行时出现Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given类问题
 os.environ["ANONYMIZED_TELEMETRY"] = "False"
