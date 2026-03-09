@@ -1,7 +1,7 @@
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-#强制安装新版sqlite3来替换掉系统自带的老版本，方便chroma读取。
+#强制安装新版sqlite3来替换掉系统自带的老版本，方便chroma读取。.
 
 
 import os
