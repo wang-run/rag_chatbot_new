@@ -45,7 +45,7 @@ from zhipuai_LLM import ZhipuaiLLM
 def get_qa_history_chain():
     retriever = get_retriever()
     llm = ZhipuaiLLM(
-        model_name='glm-4.6',
+        model_name='glm-4-flash',
         api_key=os.environ.get('ZHIPUAI_API_KEY'),
         temperature=0.1
     )
